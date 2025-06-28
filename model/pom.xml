@@ -9,13 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <packaging>pom</packaging>
-    <modules>
-        <module>service-product</module>
-        <module>service-order</module>
-    </modules>
-
-    <artifactId>services</artifactId>
+    <artifactId>model</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -24,21 +18,6 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>com.gary</groupId>
-            <artifactId>model</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <!-- Nacos 服務發現 -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
-        <!-- OpenFeign -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
         <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>

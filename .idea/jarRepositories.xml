@@ -16,10 +16,5 @@
       <option name="name" value="JBoss Community repository" />
       <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
     </remote-repository>
-    <remote-repository>
-      <option name="id" value="spring-cloud-alibaba" />
-      <option name="name" value="Spring Cloud Alibaba" />
-      <option name="url" value="https://maven.aliyun.com/repository/spring" />
-    </remote-repository>
   </component>
 </project>

@@ -1,6 +1,6 @@
 package com.gary.service;
 
-import com.gary.bean.Order;
+import com.gary.order.bean.Order;
 
 public interface OrderService {
 

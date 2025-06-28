@@ -1,4 +1,4 @@
-package com.gary.bean;
+package com.gary.product.bean;
 
 import lombok.Data;
 

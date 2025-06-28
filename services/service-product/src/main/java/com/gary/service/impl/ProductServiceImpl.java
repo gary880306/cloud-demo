@@ -1,6 +1,6 @@
 package com.gary.service.impl;
 
-import com.gary.bean.Product;
+import com.gary.product.bean.Product;
 import com.gary.service.ProductService;
 import org.springframework.stereotype.Service;
 

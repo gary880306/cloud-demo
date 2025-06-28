@@ -1,6 +1,6 @@
 package com.gary.controller;
 
-import com.gary.bean.Order;
+import com.gary.order.bean.Order;
 import com.gary.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
