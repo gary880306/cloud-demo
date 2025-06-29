@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -22,11 +23,14 @@ public class OrderServiceImpl implements OrderService {
     private DiscoveryClient discoveryClient;
 
     @Autowired
+    private LoadBalancerClient loadBalancerClient;
+
+    @Autowired
     private RestTemplate restTemplate;
 
     @Override
     public Order createOrder(Long productId, Long userId) {
-        Product product = getProductFromRemote(productId);
+        Product product = getProductFromRemoteWithLoadBalancer(productId);
         Order order = new Order();
         order.setId(1L);
         order.setTotalAmt(product.getPrice().multiply(new BigDecimal(product.getNum()))); // 遠程調用product
@@ -37,6 +41,7 @@ public class OrderServiceImpl implements OrderService {
         return order;
     }
 
+    // 查詢商品
     public Product getProductFromRemote (Long productId) {
         // 1. 取得所有註冊中心實例
         List<ServiceInstance> instances = discoveryClient.getInstances("server-product");
@@ -44,6 +49,17 @@ public class OrderServiceImpl implements OrderService {
         ServiceInstance serviceInstance = instances.get(0);
         // 3. 創建 url 獲取商品資訊
         String url = "http://" + serviceInstance.getHost() + ":" + serviceInstance.getPort() + "/product/" + productId;
+        log.info("遠程調用url: " + url);
+        // 4. 利用 restTemplate 調用並返回
+        return restTemplate.getForObject(url, Product.class);
+    }
+
+    // 查詢商品(負載均衡版)
+    public Product getProductFromRemoteWithLoadBalancer (Long productId) {
+        // 1. 取得所有註冊中心實例
+        ServiceInstance choose = loadBalancerClient.choose("server-product");
+        // 3. 創建 url 獲取商品資訊
+        String url = "http://" + choose.getHost() + ":" + choose.getPort() + "/product/" + productId;
         log.info("遠程調用url: " + url);
         // 4. 利用 restTemplate 調用並返回
         return restTemplate.getForObject(url, Product.class);
