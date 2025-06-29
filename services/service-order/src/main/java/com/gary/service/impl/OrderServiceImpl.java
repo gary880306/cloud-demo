@@ -30,7 +30,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order createOrder(Long productId, Long userId) {
-        Product product = getProductFromRemoteWithLoadBalancer(productId);
+        Product product = getProductFromRemoteWithLoadBalancerAnnotation(productId);
         Order order = new Order();
         order.setId(1L);
         order.setTotalAmt(product.getPrice().multiply(new BigDecimal(product.getNum()))); // 遠程調用product
@@ -56,12 +56,21 @@ public class OrderServiceImpl implements OrderService {
 
     // 查詢商品(負載均衡版)
     public Product getProductFromRemoteWithLoadBalancer (Long productId) {
-        // 1. 取得所有註冊中心實例
+        // 1. 取得單個實例
         ServiceInstance choose = loadBalancerClient.choose("server-product");
-        // 3. 創建 url 獲取商品資訊
+        // 2. 創建 url 獲取商品資訊
         String url = "http://" + choose.getHost() + ":" + choose.getPort() + "/product/" + productId;
         log.info("遠程調用url: " + url);
-        // 4. 利用 restTemplate 調用並返回
+        // 3. 利用 restTemplate 調用並返回
+        return restTemplate.getForObject(url, Product.class);
+    }
+
+    // 查詢商品(負載均衡版-利用註解)
+    public Product getProductFromRemoteWithLoadBalancerAnnotation (Long productId) {
+        // 1. 創建 url 獲取商品資訊
+        String url = "http://server-product/product/" + productId;
+        log.info("遠程調用url: " + url);
+        // 2. 利用 restTemplate 調用並返回
         return restTemplate.getForObject(url, Product.class);
     }
 
