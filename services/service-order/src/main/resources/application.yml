@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: server-order
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+      config:
+        import-check:
+          enabled: false
+        namespace: ${spring.profiles.active:public}
+
+---
+
+spring:
+  config:
+    import: nacos:common.properties?group=order,nacos:database.properties?group=order
+    activate:
+      on-profile: dev
+
+---
+
+spring:
+  config:
+    import: nacos:common.properties?group=order,nacos:database.properties?group=order,nacos:haha.properties?group=order
+    activate:
+      on-profile: uat
+
+---
+
+spring:
+  config:
+    import: nacos:common.properties?group=order,nacos:database.properties?group=order,nacos:hehe.properties?group=order
+    activate:
+      on-profile: prod

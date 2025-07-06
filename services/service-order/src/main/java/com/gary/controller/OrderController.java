@@ -33,4 +33,9 @@ public class OrderController {
     public String config () {
         return "order.test=" + orderProperties.getTest1() + ",order.test2=" + orderProperties.getTest2();
     }
+
+    @GetMapping("/order/configDev")
+    public String configDev () {
+        return "order.timeout=" + orderProperties.getTimeOut() + ",order.auto.confirm=" + orderProperties.getAutoConfirm() + ",order.db.url=" + orderProperties.getDbUrl();
+    }
 }

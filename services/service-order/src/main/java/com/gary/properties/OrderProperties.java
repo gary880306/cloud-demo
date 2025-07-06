@@ -11,4 +11,8 @@ public class OrderProperties {
 
     private String test1;
     private String test2;
+
+    private String timeOut;
+    private String autoConfirm;
+    private String dbUrl;
 }
