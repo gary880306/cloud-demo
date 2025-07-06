@@ -11,6 +11,10 @@ spring:
           enabled: false
         namespace: ${spring.profiles.active:public}
 
+logging:
+  level:
+    com.gary.feign: debug
+    
 ---
 
 spring:
