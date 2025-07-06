@@ -3,6 +3,7 @@ package com.gary.service.impl;
 import com.gary.order.bean.Order;
 import com.gary.product.bean.Product;
 import com.gary.service.OrderService;
+import com.gary.feign.ProductFeignClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
@@ -28,9 +29,13 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private ProductFeignClient productFeignClient;
+
     @Override
     public Order createOrder(Long productId, Long userId) {
-        Product product = getProductFromRemoteWithLoadBalancerAnnotation(productId);
+//        Product product = getProductFromRemoteWithLoadBalancerAnnotation(productId);
+        Product product = productFeignClient.getProductById(productId);
         Order order = new Order();
         order.setId(1L);
         order.setTotalAmt(product.getPrice().multiply(new BigDecimal(product.getNum()))); // 遠程調用product
