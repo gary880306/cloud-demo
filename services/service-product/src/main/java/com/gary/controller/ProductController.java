@@ -15,7 +15,7 @@ public class ProductController {
 
     // 查詢商品
     @GetMapping("/product/{id}")
-    public Product getProduct (@PathVariable("id") Long productId) {
+    public Product getProduct (@PathVariable("id") Long productId) throws InterruptedException {
         Product product = productService.getProductById(productId);
         return product;
     }
