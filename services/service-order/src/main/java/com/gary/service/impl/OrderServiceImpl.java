@@ -1,5 +1,7 @@
 package com.gary.service.impl;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.gary.order.bean.Order;
 import com.gary.product.bean.Product;
 import com.gary.service.OrderService;
@@ -32,6 +34,7 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private ProductFeignClient productFeignClient;
 
+    @SentinelResource(value = "createOrder")
     @Override
     public Order createOrder(Long productId, Long userId) {
 //        Product product = getProductFromRemoteWithLoadBalancerAnnotation(productId);
