@@ -17,7 +17,7 @@ public class ProductServiceImpl implements ProductService {
         product.setPrice(new BigDecimal(100));
         product.setProductName("小熊");
         product.setNum(2);
-        TimeUnit.SECONDS.sleep(100); // 模擬feign讀取超時
+//        TimeUnit.SECONDS.sleep(100); // 模擬feign讀取超時
         return product;
     }
 }
