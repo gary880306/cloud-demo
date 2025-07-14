@@ -34,7 +34,7 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private ProductFeignClient productFeignClient;
 
-    @SentinelResource(value = "createOrder")
+    @SentinelResource(value = "createOrder", blockHandler = "createOrderBlockHandler")
     @Override
     public Order createOrder(Long productId, Long userId) {
 //        Product product = getProductFromRemoteWithLoadBalancerAnnotation(productId);
@@ -46,6 +46,16 @@ public class OrderServiceImpl implements OrderService {
         order.setNickName("gary");
         order.setAddress("文山區");
         order.setProductList(Arrays.asList(product)); // 遠程調用product
+        return order;
+    }
+
+    // @SentinelResource兜底回調
+    public Order createOrderBlockHandler(Long productId, Long userId, BlockException e) {
+        Order order = new Order();
+        order.setId(0L);
+        order.setUserId(userId);
+        order.setNickName("未知用戶");
+        order.setAddress("錯誤原因:" + e.getClass());
         return order;
     }
 
