@@ -29,6 +29,13 @@ public class OrderController {
         return order;
     }
 
+    @GetMapping("/order/seckill")
+    public Order seckillOrder (@RequestParam("userId") Long userId, @RequestParam("productId") Long productId) {
+        Order order = orderService.createOrder(userId, productId);
+        order.setId(Long.MAX_VALUE);
+        return order;
+    }
+
     @GetMapping("/order/config")
     public String config () {
         return "order.test=" + orderProperties.getTest1() + ",order.test2=" + orderProperties.getTest2();
