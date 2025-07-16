@@ -45,4 +45,18 @@ public class OrderController {
     public String configDev () {
         return "order.timeout=" + orderProperties.getTimeOut() + ",order.auto.confirm=" + orderProperties.getAutoConfirm() + ",order.db.url=" + orderProperties.getDbUrl();
     }
+
+    // 測試流控-關聯(大量寫的時候才會限制讀)
+    // 讀
+    @GetMapping("/order/read")
+    public String read () {
+        return "read success ......";
+    }
+    // 寫
+    @GetMapping("/order/write")
+    public String write () {
+        return "write success ......";
+    }
+
+
 }
