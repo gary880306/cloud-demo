@@ -1,6 +1,6 @@
 spring:
   application:
-    name: server-order
+    name: service-order
   profiles:
     active: dev
     include: feign
@@ -11,6 +11,8 @@ spring:
         import-check:
           enabled: false
         namespace: ${spring.profiles.active:public}
+server:
+  port: 8081
 
 logging:
   level:
