@@ -12,6 +12,10 @@ spring:
               args:
                 param: q
                 regexp: gary
+            - name: Custom
+              args:
+                param: user
+                value: shan
         - id: order-route
           uri: lb://service-order
           predicates:
