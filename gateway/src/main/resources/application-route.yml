@@ -2,10 +2,23 @@ spring:
   cloud:
     gateway:
       routes:
+        - id: google-route
+          uri: https://www.google.com/
+          predicates:
+            - name: Path
+              args:
+                patterns: /search
+            - name: Query
+              args:
+                param: q
+                regexp: gary
         - id: order-route
           uri: lb://service-order
           predicates:
-            - Path=/api/order/**
+            - name: Path
+              args:
+                patterns: /api/order/**
+                matchTrailingSlash: true
         - id: product-route
           uri: lb://service-product
           predicates:
