@@ -25,6 +25,7 @@ spring:
                 matchTrailingSlash: true
           filters:
             - RewritePath=/api/order/?(?<segment>.*), /$\{segment}
+            - OnceToken=X-Response-Token, uuid
         - id: product-route
           uri: lb://service-product
           predicates:
