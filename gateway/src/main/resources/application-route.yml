@@ -1,13 +1,13 @@
 spring:
   cloud:
     gateway:
-      globalcors:
+      globalcors: # 配置cors全局跨域
         cors-configurations:
           '[/**]':
             allowed-origin-patterns: '*'
             allowed-headers: '*'
             allowed-methods: '*'
-      routes:
+      routes: # 路由
         - id: google-route
           uri: https://www.google.com/
           predicates:
@@ -18,20 +18,20 @@ spring:
               args:
                 param: q
                 regexp: gary
-            - name: Custom
+            - name: Custom # 自定義predicate
               args:
                 param: user
                 value: shan
-        - id: order-route
-          uri: lb://service-order
-          predicates:
+        - id: order-route # 全局唯一ID
+          uri: lb://service-order # 微服務名稱
+          predicates: # 斷言規則
             - name: Path
               args:
                 patterns: /api/order/**
-                matchTrailingSlash: true
-          filters:
-            - RewritePath=/api/order/?(?<segment>.*), /$\{segment}
-            - OnceToken=X-Response-Token, uuid
+                matchTrailingSlash: true # 允許結尾是否有斜線都能匹配成功
+          filters: # 攔截器
+            - RewritePath=/api/order/?(?<segment>.*), /$\{segment} # 前端/api/order/read，後端可以用/read識別
+            - OnceToken=X-Response-Token, uuid # 自定義filter
         - id: product-route
           uri: lb://service-product
           predicates:
@@ -39,4 +39,4 @@ spring:
           filters:
             - RewritePath=/api/product/?(?<segment>.*), /$\{segment}
       default-filters:
-        - AddResponseHeader=customHeader, gary
+        - AddResponseHeader=customHeader, gary # 預設filter
