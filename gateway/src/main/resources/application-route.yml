@@ -23,7 +23,12 @@ spring:
               args:
                 patterns: /api/order/**
                 matchTrailingSlash: true
+          filters:
+            - RewritePath=/api/order/?(?<segment>.*), /$\{segment}
+            - AddResponseHeader=customHeader, gary
         - id: product-route
           uri: lb://service-product
           predicates:
             - Path=/api/product/**
+          filters:
+            - RewritePath=/api/product/?(?<segment>.*), /$\{segment}

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 //@RefreshScope() // Nacos 配置中心自動刷新
-@RequestMapping("/api/order")
+//@RequestMapping("/api/order")
 @RestController
 public class OrderController {
 
